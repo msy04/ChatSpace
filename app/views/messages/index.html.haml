@@ -1,52 +1,30 @@
-.flash-box
-  チャットグループが作成されました
 .wrapper
-  .chat-side
-    .side-header
-      .side-header__box
-        %p.side-header__box__user-name
-          seo
-        %ul.side-header__box__menu
-          %li.side-header__box__menu__edit-user
-            %a{:href=>""}
-              %i.fa.fa-edit
-          %li.side-header__box__menu__new-group
-            %a{:href=>""}
-              %i.fa.fa-cog
-    .groups
-      .group
-        %p.group__group-name
-          sample
-        %p.group__latest-message
-          Hello World!
-  .chat-main
-    .main-header
-      .main-header__left-box
-        %h2.main-header__left-box__current-group
-          sample
-        %ul.main-header__left-box__member-list
-          Members:
-          %li.main-header__left-box__member-list__member
-            seo
-          %li.main-header__left-box__member-list__member
-            neko
-      %a{:href=>""}
-        %div.main-header__edit-btn
+
+  = render 'shared/side_bar'
+
+  .chat
+    .header
+      .left-header
+        .left-header__title
+          グループ名
+        %ul.left-header__members
+          Member：
+          %li.member
+            メンバー名
+          %li.member
+            メンバー名
+          %li.member
+            メンバー名
+      .right-header
+        .right-header__button
           Edit
     .messages
-      .message
-        .message__upper-info
-          %p.message__upper-info__talker
-            seo
-          %p.message__upper-info__date
-            2019/02/04(Mon)19:04:29
-        %p.message__text
-          Hello World!
+      = render @messages
     .form
-      %form{:class => "new_message", :id => "new_message", :enctype => "multipart/form-data", :action => "/", :accept-charset => "UTF-8",:method => "post"}
-        .input-box
-          %input{:placeholder => "type a message", :class => "input-box__text", :type => "text"}
-          %label{:class => "input-box__image", :for => "message_image"}
-            %i.fa.fa-image
-            %input{:class => "input-box__image__file", :type => "file", :id => "message_image"}
-        %input{:type => "submit", :name => "commit", :value => "Send", :class => "submit-btn", :data-disable-with => "Send"}
+      = form_for [@group, @message] do |f|
+        = f.text_field :content, class: 'form__message', placeholder: 'type a message'
+        .form__mask
+          = f.label :image, class: 'form__mask__image' do
+            = fa_icon 'picture-o', class: 'icon'
+            = f.file_field :image, class: 'hidden'
+        = f.submit 'Send', class: 'form__submit'
