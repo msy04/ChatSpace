@@ -1,5 +1,5 @@
 $(function(){
-  function buildHTML(message){
+  function buildSendMessageHTML(message){
     var html = `<div class = "message">
                   <div class = "upper-message">
                     <div class = "upper-message__user-name">
@@ -29,10 +29,10 @@ $(function(){
       processData: false,
       contentType: false
     })
-    .done(function(data){
-      var html = buildHTML(data);
+    .done(function(message){
+      var html = buildSendMessageHTML(message);
       $('.messages').append(html)
-      $('textbox').val('')
+      $('.form__message').val('')
     })
     .fail(function(){
       alert('error');
