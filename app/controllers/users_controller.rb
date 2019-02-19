@@ -1,9 +1,7 @@
 class UsersController < ApplicationController
 
   def index
-  end
-
-  def edit
+    @users = User.order('id ASC')
   end
 
   def update
@@ -11,6 +9,14 @@ class UsersController < ApplicationController
       redirect_to root_path
     else
       render :edit
+    end
+  end
+
+  def search
+    @users = User.where('name LIKE(?)', "%#{params[:keyword]}%")
+    respond_to do |format|
+      format.html
+      format.json
     end
   end
 
